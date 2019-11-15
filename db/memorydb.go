@@ -23,6 +23,10 @@ func init() {
 	registorDBConstructor(MemoryImpl, dbConstructor)
 }
 
+// NewMemoryDB creates an in-memory DB instance that uses basic serialization
+// to and from disk via the encoding/gob package, and implements the DB
+// interface. An input parameter, dir, is a root directory to store serialized
+// data.
 func NewMemoryDB(dir string) (DB, error) {
 	var db map[string][]byte
 

@@ -24,6 +24,8 @@ func init() {
 	registorDBConstructor(LevelImpl, dbConstructor)
 }
 
+// NewLevelDB creates a DB instance that uses LevelDB and implements the DB
+// interface. An input parameter, dir, is a root directory to store db files.
 func NewLevelDB(dir string) (DB, error) {
 	dbPath := filepath.Join(dir, "data.db")
 
