@@ -80,7 +80,7 @@ func NewBaseContext(contextImpl IContext, homePath string, configFilePath string
 
 	// set user parameters at the viper conf
 	if homePath != "" {
-		home, err:= filepath.Abs(homePath)
+		home, err := filepath.Abs(homePath)
 		if err != nil {
 			panic(err)
 		}
