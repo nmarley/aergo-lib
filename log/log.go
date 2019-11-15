@@ -251,9 +251,8 @@ func getOutput(outName string) (*os.File, error) {
 		out, err := os.OpenFile(outName, os.O_WRONLY|os.O_CREATE|os.O_APPEND|os.O_SYNC, 0644)
 		if err != nil {
 			return nil, err
-		} else {
-			return out, nil
 		}
+		return out, nil
 	}
 }
 
