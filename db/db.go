@@ -57,7 +57,7 @@ package db
 import (
 	"fmt"
 
-	"github.com/aergoio/aergo-lib/log"
+	"github.com/nmarley/aergo-lib/log"
 )
 
 var dbImpls = map[ImplType]dbConstructor{}

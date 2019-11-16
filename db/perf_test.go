@@ -316,7 +316,7 @@ func BenchmarkRandomBatchWR(b *testing.B) {
 [Refined Test Result]
 goos: windows
 goarch: amd64
-pkg: github.com/aergoio/aergo-lib/db
+pkg: github.com/nmarley/aergo-lib/db
 
 [badgerdb-ssd-single]
 testset_size: 10000000
@@ -439,5 +439,5 @@ BenchmarkHddRandomBatchWR1000/leveldb-read-12              	10000000	     87929 
 * Total size of leveldb db: 1689120 kb, Size of 1 write: 171236 byte
 
 PASS
-ok  	github.com/aergoio/aergo-lib/db	33617.451s
+ok  	github.com/nmarley/aergo-lib/db	33617.451s
 */

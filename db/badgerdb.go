@@ -14,7 +14,7 @@ import (
 	"github.com/dgraph-io/badger"
 	"github.com/dgraph-io/badger/options"
 
-	"github.com/aergoio/aergo-lib/log"
+	"github.com/nmarley/aergo-lib/log"
 )
 
 const (
