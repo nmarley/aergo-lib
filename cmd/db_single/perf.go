@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/aergoio/aergo-lib/db"
+	"github.com/nmarley/aergo-lib/db"
 	"github.com/guptarohit/asciigraph"
 )
 
