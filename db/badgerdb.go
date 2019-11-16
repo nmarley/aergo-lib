@@ -32,45 +32,6 @@ func init() {
 	registorDBConstructor(BadgerImpl, dbConstructor)
 }
 
-func (db *badgerDB) runBadgerGC() {
-	ticker := time.NewTicker(1 * time.Minute)
-
-	lastGcT := time.Now()
-	_, lastDbVlogSize := db.db.Size()
-	for {
-		select {
-		case <-ticker.C:
-			// check current db size
-			currentDblsmSize, currentDbVlogSize := db.db.Size()
-
-			// exceed badgerDbGcInterval time or badgerDbGcSize is increase slowly (it means resource is free)
-			if time.Now().Sub(lastGcT) > badgerDbGcInterval || lastDbVlogSize+badgerDbGcSize > currentDbVlogSize {
-				startGcT := time.Now()
-				logger.Debug().Str("name", db.name).Int64("lsmSize", currentDblsmSize).Int64("vlogSize", currentDbVlogSize).Msg("Start to GC at badger")
-				err := db.db.RunValueLogGC(badgerDbDiscardRatio)
-				if err != nil {
-					if err == badger.ErrNoRewrite {
-						logger.Debug().Str("name", db.name).Str("msg", err.Error()).Msg("Nothing to GC at badger")
-					} else {
-						logger.Error().Str("name", db.name).Err(err).Msg("Fail to GC at badger")
-					}
-					lastDbVlogSize = currentDbVlogSize
-				} else {
-					afterGcDblsmSize, afterGcDbVlogSize := db.db.Size()
-
-					logger.Debug().Str("name", db.name).Int64("lsmSize", afterGcDblsmSize).Int64("vlogSize", afterGcDbVlogSize).
-						Dur("takenTime", time.Now().Sub(startGcT)).Msg("Finish to GC at badger")
-					lastDbVlogSize = afterGcDbVlogSize
-				}
-				lastGcT = time.Now()
-			}
-
-		case <-db.ctx.Done():
-			return
-		}
-	}
-}
-
 // NewBadgerDB create a DB instance that uses badger db and implements DB interface.
 // An input parameter, dir, is a root directory to store db files.
 func NewBadgerDB(dir string) (DB, error) {
@@ -103,8 +64,6 @@ func NewBadgerDB(dir string) (DB, error) {
 		cancelFunc: cancelFunc,
 		name:       dir,
 	}
-
-	go database.runBadgerGC()
 
 	return database, nil
 }
